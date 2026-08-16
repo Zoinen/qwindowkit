@@ -15,7 +15,9 @@
 #  include "cocoawindowcontext_p.h"
 #elif defined(Q_OS_LINUX) && QT_VERSION >= QT_VERSION_CHECK(6, 0, 0)
 #  include "qwindowkit_linux.h"
-#  include "linuxwaylandcontext_p.h"
+#  if !defined(QWK_NO_WAYLAND)
+#    include "linuxwaylandcontext_p.h"
+#  endif
 #  include "linuxx11context_p.h"
 #endif
 #include "qtwindowcontext_p.h"
@@ -60,9 +62,11 @@ namespace QWK {
 #  elif defined(Q_OS_MAC)
         return new CocoaWindowContext();
 #  elif defined(Q_OS_LINUX) && QT_VERSION >= QT_VERSION_CHECK(6, 0, 0)
+#    if !defined(QWK_NO_WAYLAND)
         if (Private::isWaylandPlatform() && Private::waylandAPI().isValid()) {
             return new LinuxWaylandContext();
         }
+#    endif
         if (Private::isX11Platform() && Private::x11API().isValid()) {
             return new LinuxX11Context();
         }

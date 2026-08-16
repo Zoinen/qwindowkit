@@ -21,6 +21,7 @@ option(QWINDOWKIT_INSTALL "Install library" ON)
 option(QWINDOWKIT_FORCE_QT_WINDOW_CONTEXT "Force use Qt Window Context" OFF)
 option(QWINDOWKIT_ENABLE_WINDOWS_SYSTEM_BORDERS "Enable system borders on Windows" ON)
 option(QWINDOWKIT_ENABLE_STYLE_AGENT "Enable building style agent" ON)
+option(QWINDOWKIT_BUILD_WAYLAND "Build the Linux Wayland window context" ON)
 
 #[[
 
@@ -45,6 +46,10 @@ Detailed Introcuction to Configure Options:
 `QWINDOWKIT_ENABLE_STYLE_AGENT`
   - Select whether to exclude the style component by DISABLING this option according to your
     requirements and your Qt version.
+
+`QWINDOWKIT_BUILD_WAYLAND`
+  - Disable this option when building against a Qt installation without Wayland support.
+  - The Linux X11 window context remains available.
 
 #]]
 

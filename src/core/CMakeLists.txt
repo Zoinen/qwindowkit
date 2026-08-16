@@ -62,9 +62,13 @@ else()
     list(APPEND _src
         contexts/linuxx11context_p.h
         contexts/linuxx11context.cpp
-        contexts/linuxwaylandcontext_p.h
-        contexts/linuxwaylandcontext.cpp
     )
+    if(QWINDOWKIT_BUILD_WAYLAND)
+        list(APPEND _src
+            contexts/linuxwaylandcontext_p.h
+            contexts/linuxwaylandcontext.cpp
+        )
+    endif()
 endif()
 
 set(_sync_include_options)
@@ -96,6 +100,10 @@ qwk_add_library(${PROJECT_NAME} QT_AUTOGEN
     INCLUDE_PRIVATE *
     MACRO_PREFIX QWK_CORE
 )
+
+if(UNIX AND NOT APPLE AND NOT QWINDOWKIT_BUILD_WAYLAND)
+    target_compile_definitions(${PROJECT_NAME} PRIVATE QWK_NO_WAYLAND)
+endif()
 
 qwk_sync_include(${PROJECT_NAME} FORCE ${_sync_include_options})
 
